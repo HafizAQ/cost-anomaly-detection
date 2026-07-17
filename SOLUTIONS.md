@@ -1,10 +1,10 @@
 # Lab Solution: Detect Unexpected AWS Costs with AWS Cost Anomaly Detection
 
-**Student Name:** _______________________________________
+**Student Name:** Hafiz Abdul Quddus
 
-**Date:** _______________________________________________
+**Date:** 17-07-2026
 
-**Lab Completion Time:** ____________ minutes
+**Lab Completion Time:** 100 minutes
 
 ---
 
@@ -17,11 +17,9 @@
 **Your Answer**
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+AWS Cost Anomaly Detection helps identify unexpected or unusual increases in AWS spending by continuously monitoring usage costs 
+with machine learning. It automatically detects cost anomalies and sends alerts, allowing users to investigate and resolve issues 
+before they result in significant unexpected charges.
 ```
 
 ---
@@ -31,11 +29,9 @@ _______________________________________________________________
 **Your Answer**
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+AWS Cost Anomaly Detection automatically detects unexpected spending patterns using machine learning and alerts users when unusual 
+costs occur. In contrast, AWS Budgets allows users to set predefined cost or usage limits and sends notifications only when those 
+budget thresholds are reached or exceeded.
 ```
 
 ---
@@ -56,10 +52,10 @@ screenshots/01-cost-anomaly-dashboard.png
 
 ## Monitor Configuration
 
-| Setting | Your Value |
-|----------|------------|
-| Monitor Name | __________________________ |
-| Monitor Type | __________________________ |
+| Setting      | Your Value                    |
+| ------------ | ----------------------------- |
+| Monitor Name | bootcamp-cost-monitor         |
+| Monitor Type | AWS Services (Linked account) |
 
 ---
 
@@ -77,11 +73,11 @@ screenshots/02-create-monitor.png
 
 ## Monitor Details
 
-| Item | Value |
-|------|-------|
-| Monitor Name | __________________________ |
-| Monitor Status | __________________________ |
-| Monitor Scope | __________________________ |
+| Item           | Value                                 |
+| -------------- | ------------------------------------- |
+| Monitor Name   | bootcamp-cost-monitor                 |
+| Monitor Status | Monitor has been created successfully |
+| Monitor Scope  | Anomalies detection w.r.t Cost        |
 
 ---
 
@@ -101,12 +97,12 @@ screenshots/03-monitor-created.png
 
 ## Subscription Details
 
-| Setting | Your Value |
-|----------|------------|
-| Subscription Name | __________________________ |
-| Frequency | __________________________ |
-| Threshold | __________________________ |
-| Recipient Email | __________________________ |
+| Setting           | Your Value              |
+| ----------------- | ----------------------- |
+| Subscription Name | engineering-alerts      |
+| Frequency         | Daily                   |
+| Threshold         | 10$                     |
+| Recipient Email   | hafiz-XXXXX@outlook.com |
 
 ---
 
@@ -141,11 +137,7 @@ screenshots/05-subscription-created.png
 ### What information is displayed for each anomaly?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+Each anomaly shows the affected service, estimated cost impact, time period, and the possible cause.
 ```
 
 ---
@@ -153,11 +145,7 @@ _______________________________________________________________
 ### Can AWS automatically determine the root cause?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+No. AWS suggests possible causes, but users must investigate to confirm the exact root cause. Anomaly detection monitor could help to faster this process.
 ```
 
 ---
@@ -211,7 +199,7 @@ Estimated Cause
 Which AWS service caused the anomaly?
 
 ```
-_______________________________________________________________
+Amazon EC2
 ```
 
 ---
@@ -221,11 +209,7 @@ _______________________________________________________________
 Is this increase expected or unexpected? Explain your reasoning.
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+No, it appears unexpected.
 ```
 
 ---
@@ -235,9 +219,7 @@ _______________________________________________________________
 Which AWS Console page would you investigate first?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
+Amazon EC2
 ```
 
 ---
@@ -246,22 +228,16 @@ _______________________________________________________________
 
 List at least three actions you would perform immediately.
 
-1.
-
 ```
-_______________________________________________________________
+Check the running EC2 instances.
 ```
 
-2.
-
 ```
-_______________________________________________________________
+Stop or terminate unnecessary instances.
 ```
 
-3.
-
 ```
-_______________________________________________________________
+Review who launched the instances and when.
 ```
 
 ---
@@ -271,11 +247,7 @@ _______________________________________________________________
 How could this situation have been prevented?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+By enabling Cost Anomaly Detection, setting AWS Budgets, and monitoring EC2 usage regularly.
 ```
 
 ---
@@ -284,14 +256,14 @@ _______________________________________________________________
 
 Complete the following table.
 
-| Feature | AWS Budgets | Cost Anomaly Detection |
-|----------|-------------|------------------------|
-| Uses Machine Learning | | |
-| Uses Fixed Thresholds | | |
-| Detects Unexpected Spending | | |
-| Sends Email Alerts | | |
-| Learns Historical Spending | | |
-| Predicts Unusual Behaviour | | |
+| Feature                     | AWS Budgets | Cost Anomaly Detection |
+| --------------------------- | ----------- | ---------------------- |
+| Uses Machine Learning       | No          | Yes                    |
+| Uses Fixed Thresholds       | Yes         | No                     |
+| Detects Unexpected Spending | No          | Yes                    |
+| Sends Email Alerts          | Yes         | Yes                    |
+| Learns Historical Spending  | No          | Yes                    |
+| Predicts Unusual Behaviour  | No          | Yes                    |
 
 ---
 
@@ -299,14 +271,15 @@ Complete the following table.
 
 Complete the table below.
 
-| Scenario | Would it trigger an alert? | Why? |
-|----------|----------------------------|------|
-| Launch one t3.micro instance | | |
-| Launch 40 EC2 instances | | |
-| Create four NAT Gateways | | |
-| Multi-AZ RDS Database | | |
-| Lambda traffic increases by 10% | | |
-| Create a Redshift Cluster | | |
+| Scenario                        | Would it trigger an alert? | Why?                                                   |
+| ------------------------------- | -------------------------- | ------------------------------------------------------ |
+| Launch one t3.micro instance    | No                         | Cost increase is very small (Free Tier basic package)) |
+| Launch 40 EC2 instances         | Yes                        | Causes a large, unusual cost increase.                 |
+| Create four NAT Gateways        | Yes                        | NAT Gateways are expensive and increase costs.         |
+| Multi-AZ RDS Database           | Yes                        | Running multiple database instances increases cost.    |
+| Lambda traffic increases by 10% | No                         | A small increase is usually considered normal.         |
+| Create a Redshift Cluster       | Yes                        | Redshift clusters have high running costs.             |
+
 
 ---
 
@@ -319,6 +292,33 @@ aws ce get-cost-and-usage \
   --time-period Start=2026-07-01,End=2026-07-31 \
   --granularity MONTHLY \
   --metrics UnblendedCost
+
+
+  #Output 
+  {
+    "ResultsByTime": [
+        {
+            "TimePeriod": {
+                "Start": "2026-07-01",
+                "End": "2026-07-31"
+            },
+:...skipping...
+{
+    "ResultsByTime": [
+        {
+            "TimePeriod": {
+                "Start": "2026-07-01",
+                "End": "2026-07-31"
+            },
+            "Total": {
+:...skipping...
+{
+    "ResultsByTime": [
+        {
+            "TimePeriod": {
+                "Start": "2026-07-01",
+                "End": "2026-07-31"
+            },
 ```
 
 ---
@@ -326,11 +326,8 @@ aws ce get-cost-and-usage \
 ### What information did this command return?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+The command returned the monthly AWS cost data for the period 2026-07-01 to 2026-07-31, 
+including the total UnblendedCost for that month.
 ```
 
 ---
@@ -338,11 +335,8 @@ _______________________________________________________________
 ### Why can't this command create Cost Anomaly Monitors?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+Because the `get-cost-and-usage` command is read-only. It only retrieves cost information 
+and cannot create or manage Cost Anomaly Monitors.
 ```
 
 ---
@@ -352,11 +346,7 @@ _______________________________________________________________
 ## 1. Why is Cost Anomaly Detection considered a proactive FinOps tool?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+It detects unusual spending early, helping prevent higher costs.
 ```
 
 ---
@@ -364,11 +354,7 @@ _______________________________________________________________
 ## 2. Why should organizations use both AWS Budgets and Cost Anomaly Detection?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+Budgets track spending limits, while Cost Anomaly Detection finds unexpected costs.
 ```
 
 ---
@@ -376,11 +362,7 @@ _______________________________________________________________
 ## 3. What types of AWS resources are most likely to trigger anomalies?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+EC2 instances, RDS databases, NAT Gateways, and Redshift clusters.
 ```
 
 ---
@@ -388,11 +370,7 @@ _______________________________________________________________
 ## 4. How would you investigate an unexpected AWS bill?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+Check Cost Explorer, review recent resource changes, and stop unnecessary resources.
 ```
 
 ---
@@ -400,25 +378,21 @@ _______________________________________________________________
 ## 5. What would you do if you received a Cost Anomaly alert at 2:00 AM?
 
 ```
-_______________________________________________________________
-
-_______________________________________________________________
-
-_______________________________________________________________
+Review the alert immediately, identify the cause, and stop unnecessary resources if needed.
 ```
 
 ---
 
 # Verification Checklist
 
-- [ ] Successfully accessed AWS Cost Anomaly Detection
-- [ ] Created a Cost Monitor
-- [ ] Created an Email Subscription
-- [ ] Verified notification settings
-- [ ] Explored the dashboard
-- [ ] Completed the investigation exercise
-- [ ] Compared AWS Budgets with Cost Anomaly Detection
-- [ ] Completed all reflection questions
+- [X] Successfully accessed AWS Cost Anomaly Detection
+- [X] Created a Cost Monitor
+- [X] Created an Email Subscription
+- [X] Verified notification settings
+- [X] Explored the dashboard
+- [X] Completed the investigation exercise
+- [X] Compared AWS Budgets with Cost Anomaly Detection
+- [X] Completed all reflection questions
 
 ---
 
@@ -433,14 +407,14 @@ Did you encounter any issues?
 If yes, document them below.
 
 | Issue | Resolution |
-|--------|------------|
-| | |
-| | |
-| | |
+| ----- | ---------- |
+|       |            |
+|       |            |
+|       |            |
 
 ---
 
-# Bonus Challenges Completed
+# Bonus Challenges Completed : NA
 
 - [ ] Challenge 1 – Created another Cost Monitor
 - [ ] Challenge 2 – Compared AWS Budgets, Cost Explorer, and Cost Anomaly Detection
@@ -472,14 +446,14 @@ _______________________________________________________________
 
 Rate your confidence for each topic.
 
-| Topic | Rating (1–5) |
-|---------|--------------|
-| Cost Anomaly Detection Concepts | ____ |
-| Creating Cost Monitors | ____ |
-| Creating Alert Subscriptions | ____ |
-| Investigating Cost Anomalies | ____ |
-| Comparing with AWS Budgets | ____ |
-| FinOps Best Practices | ____ |
+| Topic                           | Rating (1–5) |
+| ------------------------------- | ------------- |
+| Cost Anomaly Detection Concepts | ____          |
+| Creating Cost Monitors          | ____          |
+| Creating Alert Subscriptions    | ____          |
+| Investigating Cost Anomalies    | ____          |
+| Comparing with AWS Budgets      | ____          |
+| FinOps Best Practices           | ____          |
 
 ---
 
@@ -511,13 +485,13 @@ _______________________________________________________________
 
 # Time Tracking
 
-| Activity | Minutes |
-|-----------|---------|
-| Reading Lab | ______ |
-| Creating Monitor | ______ |
-| Creating Subscription | ______ |
-| Investigation Exercise | ______ |
-| Reflection Questions | ______ |
+| Activity               | Minutes |
+| ---------------------- | ------- |
+| Reading Lab            | ______  |
+| Creating Monitor       | ______  |
+| Creating Subscription  | ______  |
+| Investigation Exercise | ______  |
+| Reflection Questions   | ______  |
 
 ---
 
@@ -529,4 +503,4 @@ _______________________________________________________________
 
 ☐ Needs Revision
 
-**Submission Date:** _________________________________
+**Submission Date:**  17-07-2026
